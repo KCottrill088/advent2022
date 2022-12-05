@@ -4,7 +4,7 @@ BigInteger sum= 0;
 
 List<BigInteger> calories = new List<BigInteger>();
 
-foreach (var line in File.ReadLines(@"/home/kevin/repos/advent2022/data/calories.dat"))
+foreach (var line in File.ReadLines("data/calories.dat"))
 {
     if (string.IsNullOrWhiteSpace(line))
     {
