@@ -6,8 +6,6 @@ var stacks = new[] { new Stack<char>() };
 
 foreach (var crate in InputHandler.GetCrates(crates))
 {
-    while (crate.)
-    var stack = 0;
     foreach (var supply in crate)
     {
         
