@@ -24,23 +24,23 @@ foreach (var row in crates)
 }
 
 var moves = new List<Move>();
-int quantity, source, destination;
 foreach (var row in input)
 {
     if (!Regex.Match(row, @"^move").Success) continue;
     if (row.Length == 18)
     {
-        quantity = int.Parse(row.Substring(5, 1));
-        source = int.Parse(row.Substring(12, 1)) - 1;
-        destination = int.Parse(row.Substring(17, 1)) - 1;
+        moves.Add(new Move(
+            int.Parse(row.Substring(5, 1)),
+            int.Parse(row.Substring(12, 1)) - 1,
+            int.Parse(row.Substring(17, 1)) - 1));
     }
     else
     {
-        quantity = int.Parse(row.Substring(5, 2));
-        source = int.Parse(row.Substring(13, 1)) - 1;
-        destination = int.Parse(row.Substring(18, 1)) - 1;
+        moves.Add(new Move(
+            int.Parse(row.Substring(5, 2)),
+            int.Parse(row.Substring(13, 1)) - 1,
+            int.Parse(row.Substring(18, 1)) - 1));
     }
-    moves.Add(new Move(quantity, source, destination));
 }
 
 foreach (var move in moves)
