@@ -59,32 +59,3 @@ foreach (var stack in stacks)
 Console.WriteLine();
 
 public record Move(int Quantity, int Source, int Destination);
-public static class InputHandler
-{
-    public static IEnumerable<string> SplitRow(string input)
-    {
-        var row = new List<string>();
-        var i = 0;
-        while (i + 2 <= input.Length)
-        {
-            var token = input.Substring(i + 1, 1);
-            row.Add(token);
-            i += 4;
-        }
-
-        return row;
-    }
-
-    public static IList<string> GetCrates(string[] input)
-    {
-        var crates = new List<string>();
-        var i = 0;
-        while (!Regex.Match(input[i], @"^\s+\d").Success)
-        {
-            crates.Add(input[i]);
-            i++;
-        }
-
-        return crates;
-    }
-}
