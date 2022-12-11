@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-var input = File.ReadAllLines("data/crates.example");
+var input = File.ReadAllLines("data/crates.dat");
 var crates = new List<string>();
 foreach (var row in input)
 {
@@ -45,17 +45,18 @@ foreach (var row in input)
 
 foreach (var move in moves)
 {
+    var toMove = new List<char>();
     for (var i = 0; i < move.Quantity; i++)
     {
         var item = stacks[move.Source].Pop();
-        stacks[move.Destination].Push(item);
+        toMove.Add(item);
+        // stacks[move.Destination].Push(item);
     }
+    toMove.Reverse();
+    toMove.ForEach(i => stacks[move.Destination].Push(i));
 }
 
-foreach (var stack in stacks)
-{
-    Console.Write(stack.Peek());
-}
+stacks.ForEach(s => Console.Write(s.Peek()));
 Console.WriteLine();
 
-public record Move(int Quantity, int Source, int Destination);
+internal record Move(int Quantity, int Source, int Destination);
