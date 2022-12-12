@@ -1,32 +1,67 @@
-﻿var gridInput = File.ReadAllLines("data/grid.example");
+﻿var gridInput = File.ReadAllLines("data/grid.dat");
 var grid = new List<IList<int>>(gridInput.Length);
-grid.AddRange(gridInput.Select(InputConverter.StringToDigits));
+grid.AddRange(gridInput.Select(StringToDigits));
 
-foreach (var row in grid)
+var visibleTrees = 0;
+for (var row = 0; row < grid.Count; row++)
 {
-    foreach (var tree in row)
-        Console.Write(tree);
+    for (var col = 0; col < grid.Count; col++)
+    {
+        Console.Write(grid[row][col]);
+        if (Check.Visible(grid, row, col))
+            visibleTrees++;
+    }
     Console.WriteLine();
+}
+Console.WriteLine($"{visibleTrees} trees are visible.");
+
+static IList<int> StringToDigits(string input)
+{
+    var digits = new List<int>();
+    foreach(var c in input)
+        if (int.TryParse(c.ToString(), out var d))
+            digits.Add(d);
+    return digits;
 }
 
 public static class Check
 {
-    public static IList<int> Visibility(IList<int> row)
+    public static bool Visible(List<IList<int>> treeGrid, int row, int col)
     {
-        var visible = new int[row.Count - 2];
+        if (row == 0 || col == 0)
+            return true;
+        var maxIndex = treeGrid.Count - 1;
+        if (row == maxIndex || col == maxIndex)
+            return true;
 
-        return visible;
-    }
-}
+        var maxHeight = 0;
+        for (var z = 0; z < col; z++)
+        {
+            maxHeight = Math.Max(maxHeight, treeGrid[row][z]);
+        }
+        if (treeGrid[row][col] > maxHeight) return true;
 
-static class InputConverter
-{
-    internal static IList<int> StringToDigits(string input)
-    {
-        var digits = new List<int>();
-        foreach(var c in input)
-            if (int.TryParse(c.ToString(), out var d))
-                digits.Add(d);
-        return digits;
+        maxHeight = 0;
+        for (var z = maxIndex; z > col; z--)
+        {
+            maxHeight = Math.Max(maxHeight, treeGrid[row][z]);
+        }
+        if (treeGrid[row][col] > maxHeight) return true;
+
+        maxHeight = 0;
+        for (var z = 0; z < row; z++)
+        {
+            maxHeight = Math.Max(maxHeight, treeGrid[z][col]);
+        }
+        if (treeGrid[row][col] > maxHeight) return true;
+
+        maxHeight = 0;
+        for (var z = maxIndex; z > row; z--)
+        {
+            maxHeight = Math.Max(maxHeight, treeGrid[z][col]);
+        }
+        if (treeGrid[row][col] > maxHeight) return true;
+
+        return false;
     }
 }

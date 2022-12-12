@@ -1,5 +1,4 @@
-﻿using System.Security.Principal;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 var commands = File.ReadAllLines("data/commands.example");
 
