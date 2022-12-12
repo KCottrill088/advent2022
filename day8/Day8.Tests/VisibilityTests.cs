@@ -18,6 +18,20 @@ public class VisibilityTests
             new List<int> { 9, 7, 5, 3, 1 }
         };
     }
+
+    [Theory]
+    [InlineData(0, 0, 0)]
+    [InlineData(0, 0, 1)]
+    [InlineData(0, 0, 2)]
+    [InlineData(0, 0, 3)]
+    [InlineData(0, 0, 4)]
+    public void CheckScenicScoreTests(int expectedScenicScore, int row, int col)
+    {
+        var scenicScore = Check.ScenicScore(_grid, row, col);
+        
+        Assert.Equal(expectedScenicScore, scenicScore);
+    }
+
     [Theory]
     [InlineData(true, 1, 1)]
     [InlineData(true, 1, 2)]
@@ -33,6 +47,5 @@ public class VisibilityTests
         var visible = Check.Visible(_grid, row, col);
         
         Assert.Equal(expectedVisibility, visible);
-
     }
 }
