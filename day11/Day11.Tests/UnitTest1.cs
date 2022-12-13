@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Day9.Tests;
+namespace Day11.Tests;
 
 public class UnitTest1
 {
