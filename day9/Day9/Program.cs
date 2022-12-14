@@ -29,7 +29,25 @@ public sealed class Rope
             {
                 Head = new Position(Head.X, Head.Y + 1);
                 if (Head.Y - 1 > Tail.Y)
-                    Tail = new Position(Head.X, Tail.Y - 1);
+                    Tail = new Position(Head.X, Head.Y - 1);
+            }
+            else if (input.direction == 'D')
+            {
+                Head = new Position(Head.X, Head.Y - 1);
+                if (Head.Y + 1 < Tail.Y)
+                    Tail = new Position(Head.X, Head.Y + 1);
+            }
+            else if (input.direction == 'R')
+            {
+                Head = new Position(Head.X + 1, Head.Y);
+                if (Head.X - 1 > Tail.X)
+                    Tail = new Position(Head.X - 1, Head.Y);
+            }
+            else if (input.direction == 'L')
+            {
+                Head = new Position(Head.X - 1, Head.Y);
+                if (Head.X + 1 < Tail.X)
+                    Tail = new Position(Head.X + 1, Head.Y);
             }
         }
     }
