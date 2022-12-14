@@ -1,4 +1,6 @@
-﻿var moves = File.ReadAllLines("data/moves.example");
+﻿using Microsoft.VisualBasic;
+
+var moves = File.ReadAllLines("data/moves.example");
 var moveInputs = moves.Select(move => new MoveInput(move[0], int.TryParse(move.Substring(2), out var d) ? d : 0)).ToList();
 
 moveInputs.ForEach(m => Console.WriteLine($"{m.direction}\t{m.distance}"));
@@ -21,6 +23,14 @@ public sealed class Rope
 
     public void Move(MoveInput input)
     {
-        
+        for (var i = 0; i < input.distance; i++)
+        {
+            if (input.direction == 'U')
+            {
+                Head = new Position(Head.X, Head.Y + 1);
+                if (Head.Y - 1 > Tail.Y)
+                    Tail = new Position(Head.X, Tail.Y - 1);
+            }
+        }
     }
 }
