@@ -27,15 +27,4 @@ public class RopeTests
         Assert.Equal(expectedTailPosition, rope.Tail);
         Assert.Equal(expectedVisited, rope.Visited);
     }
-
-    [Theory]
-    [InlineData('U', 1, 'U', 1, 0, 2, 0, 1)]
-    public void MoveLongRopeTests(
-        char direction1, int distance1,
-        char direction2, int distance2,
-        int knot0X, int knot0Y,
-        int knot1X, int knot1Y)
-    {
-        var rope = new LongRope();
-    }
 }
