@@ -8,6 +8,7 @@ Console.WriteLine($"Tail visited {rope.Visited} spaces.");
 var longRope = new Rope(10);
 moveInputs.ForEach(m => longRope.Move(m));
 Console.WriteLine($"Tail of long rope visited {longRope.Visited} spaces.");
+longRope.ShowVisited();
 
 public record MoveInput(char Direction, int Distance);
 
@@ -61,6 +62,35 @@ public sealed class Rope
                     Knots[j] = new Position(Knots[j-1].X + 1, Knots[j-1].Y);
             }
             _visited.Add(Knots.Last());
+        }
+    }
+
+    public void ShowVisited()
+    {
+        int maxY, minX, minY = 0;
+        var maxX = maxY = minX = minY;
+        
+        _visited.ToList().ForEach(p =>
+        {
+            minX = Math.Min(minX, p.X);
+            maxX = Math.Max(maxX, p.X);
+            minY = Math.Min(minY, p.Y);
+            maxY = Math.Max(maxY, p.Y);
+        });
+        minX--; maxX += 2;
+        maxY++; minY -= 2;
+
+        for (var y = maxY; y > minY; y--)
+        {
+            for (var x = minX; x < maxX; x++)
+            {
+                var symbol = ".";
+                var testPos = new Position(x, y);
+                if (_visited.Contains(testPos))
+                    symbol = "#";
+                Console.Write(symbol);
+            }
+            Console.WriteLine();
         }
     }
 }
