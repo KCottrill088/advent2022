@@ -1,15 +1,33 @@
 ﻿using System.Text.RegularExpressions;
 
-var commands = File.ReadAllLines("data/commands.example");
+var commands = File.ReadAllLines("/home/kevin/repos/advent2022/day7/Day7/data/commands.example");
 
-var fileSystem = new Directory("/");
+Directory fileSystem;
+Directory currentDirectory = null;
 foreach (var command in commands)
 {
     if (Regex.Match(command, @"^\$\s+").Success)
     {
-        var result = Interpreter.Dispatch(command);
-            if (result is not null)
-                Console.WriteLine(result);
+        if (Regex.Match(command, @"^\$\s+cd\s+").Success)
+        {
+            Console.WriteLine(command);
+            var dirName = command[5..];
+            var directory = new Directory(dirName);
+            Console.WriteLine(dirName);
+            if (dirName.Equals("/"))
+                fileSystem = directory;
+            currentDirectory = directory;
+        }
+    }
+    else
+    {
+        var fileMatch = Regex.Match(command, @"^(\d+)\s+(\S+)$");
+        if (fileMatch.Success)
+        {
+            var file = new ElfFile(fileMatch.Groups[2].Captures[0].Value, int.Parse(fileMatch.Groups[1].Captures[0].Value));
+            Console.WriteLine($"{file.Name} {file.Size}");
+            currentDirectory.Files.Add(file);
+        }
     }
 }
 
@@ -23,19 +41,8 @@ public sealed class Directory
     }
 
     public string Name { get; }
-    public IEnumerable<Directory> Directories { get; }
-    public IEnumerable<ElfFile> Files { get; }
+    public IList<Directory> Directories { get; }
+    public IList<ElfFile> Files { get; }
 }
 
 public record ElfFile(string Name, int Size);
-
-public sealed class Interpreter
-{
-    private string _wd = String.Empty;
-    public static string? Dispatch(string command)
-    {
-        if (Regex.Match(command, @"^\$\s+cd\s+").Success)
-            return command;
-        return default;
-    }
-}
