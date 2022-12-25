@@ -1,4 +1,4 @@
-﻿var moves = File.ReadAllLines("data/moves.dat");
+﻿var moves = File.ReadAllLines("data/moves.larger");
 var moveInputs = moves.Select(move => new MoveInput(move[0], int.TryParse(move.Substring(2), out var d) ? d : 0)).ToList();
 
 var rope = new Rope(2);
